@@ -16,7 +16,12 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:adsurg/next-lake-schema-engine.git"
+  },
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsup",
     "test": "vitest run",
     "lint": "eslint . && prettier --check .",
