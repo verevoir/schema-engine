@@ -38,7 +38,7 @@ export function select<T extends [string, ...string[]]>(
   return new Field(z.enum(options), { label, ui: 'select', required: true });
 }
 
-/** Array field (list of items) */
+/** Array field (list of items). Pass a field definition as the item template. */
 export function array<T extends z.ZodTypeAny>(
   label: string,
   item: FieldDefinition<T>,
@@ -50,7 +50,7 @@ export function array<T extends z.ZodTypeAny>(
   });
 }
 
-/** Object field (nested group of fields) */
+/** Object field (nested group of fields). Pass a record of field definitions as the shape. */
 export function object<T extends Record<string, FieldDefinition>>(
   label: string,
   fields: T,

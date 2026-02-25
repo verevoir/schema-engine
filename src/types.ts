@@ -26,19 +26,21 @@ export interface FieldDefinition<T extends z.ZodTypeAny = z.ZodTypeAny> {
 /** A record of field definitions keyed by field name */
 export type FieldRecord = Record<string, FieldDefinition>;
 
-/** A block definition returned by defineBlock() */
+/** A named content block with its field definitions, Zod schema, and a validate function. */
 export interface BlockDefinition<F extends FieldRecord> {
   name: string;
   fields: F;
+  /** The composed Zod object schema — can be used directly with `schema.parse()` or `schema.safeParse()`. */
   schema: z.ZodObject<{
     [K in keyof F]: F[K]['schema'];
   }>;
+  /** Parse and validate unknown data. Returns the typed result on success, throws a ZodError on failure. */
   validate: (
     data: unknown,
   ) => z.infer<z.ZodObject<{ [K in keyof F]: F[K]['schema'] }>>;
 }
 
-/** Infer the TypeScript type from a block definition */
+/** Extract the TypeScript type a block would produce after validation. Usage: `type Hero = InferBlock<typeof hero>` */
 export type InferBlock<B> =
   B extends BlockDefinition<infer F>
     ? z.infer<z.ZodObject<{ [K in keyof F]: F[K]['schema'] }>>

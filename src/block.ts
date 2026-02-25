@@ -1,7 +1,11 @@
 import { z } from 'zod';
 import type { FieldRecord, BlockDefinition } from './types.js';
 
-/** Define a named content block from a set of fields */
+/**
+ * Define a named content block from a set of fields.
+ * Composes field schemas into a Zod object schema. The returned `validate`
+ * method calls `schema.parse()` — it throws a `ZodError` on invalid data.
+ */
 export function defineBlock<F extends FieldRecord>(config: {
   name: string;
   fields: F;
