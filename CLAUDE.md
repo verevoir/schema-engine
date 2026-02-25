@@ -12,15 +12,15 @@ A lightweight TypeScript library for defining structured content shapes. Built o
 ## Quick Example
 
 ```typescript
-import { defineBlock, text, richText, number, boolean } from "@nextlake/schema";
+import { defineBlock, text, richText, number, boolean } from '@nextlake/schema';
 
 const hero = defineBlock({
-  name: "hero",
+  name: 'hero',
   fields: {
-    title: text("Title").max(60),
-    body: richText("Body"),
-    order: number("Sort Order").optional(),
-    featured: boolean("Featured"),
+    title: text('Title').max(60),
+    body: richText('Body'),
+    order: number('Sort Order').optional(),
+    featured: boolean('Featured'),
   },
 });
 

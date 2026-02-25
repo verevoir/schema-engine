@@ -1,113 +1,121 @@
-import { describe, it, expect } from "vitest";
-import { text, richText, number, boolean, select, array, object } from "../src/index.js";
+import { describe, it, expect } from 'vitest';
+import {
+  text,
+  richText,
+  number,
+  boolean,
+  select,
+  array,
+  object,
+} from '../src/index.js';
 
-describe("text()", () => {
-  it("creates a string field with text UI hint", () => {
-    const field = text("Title");
-    expect(field.meta.label).toBe("Title");
-    expect(field.meta.ui).toBe("text");
+describe('text()', () => {
+  it('creates a string field with text UI hint', () => {
+    const field = text('Title');
+    expect(field.meta.label).toBe('Title');
+    expect(field.meta.ui).toBe('text');
     expect(field.meta.required).toBe(true);
   });
 
-  it("validates strings", () => {
-    const field = text("Title");
-    expect(field.schema.parse("hello")).toBe("hello");
+  it('validates strings', () => {
+    const field = text('Title');
+    expect(field.schema.parse('hello')).toBe('hello');
     expect(() => field.schema.parse(123)).toThrow();
   });
 
-  it("supports .max()", () => {
-    const field = text("Title").max(5);
-    expect(field.schema.parse("hello")).toBe("hello");
-    expect(() => field.schema.parse("too long")).toThrow();
+  it('supports .max()', () => {
+    const field = text('Title').max(5);
+    expect(field.schema.parse('hello')).toBe('hello');
+    expect(() => field.schema.parse('too long')).toThrow();
   });
 
-  it("supports .min()", () => {
-    const field = text("Title").min(3);
-    expect(field.schema.parse("hello")).toBe("hello");
-    expect(() => field.schema.parse("hi")).toThrow();
+  it('supports .min()', () => {
+    const field = text('Title').min(3);
+    expect(field.schema.parse('hello')).toBe('hello');
+    expect(() => field.schema.parse('hi')).toThrow();
   });
 
-  it("supports .optional()", () => {
-    const field = text("Title").optional();
+  it('supports .optional()', () => {
+    const field = text('Title').optional();
     expect(field.meta.required).toBe(false);
     expect(field.schema.parse(undefined)).toBeUndefined();
-    expect(field.schema.parse("hello")).toBe("hello");
+    expect(field.schema.parse('hello')).toBe('hello');
   });
 });
 
-describe("richText()", () => {
-  it("creates a string field with rich-text UI hint", () => {
-    const field = richText("Body");
-    expect(field.meta.ui).toBe("rich-text");
-    expect(field.schema.parse("<p>hello</p>")).toBe("<p>hello</p>");
+describe('richText()', () => {
+  it('creates a string field with rich-text UI hint', () => {
+    const field = richText('Body');
+    expect(field.meta.ui).toBe('rich-text');
+    expect(field.schema.parse('<p>hello</p>')).toBe('<p>hello</p>');
   });
 });
 
-describe("number()", () => {
-  it("creates a number field", () => {
-    const field = number("Order");
-    expect(field.meta.ui).toBe("number");
+describe('number()', () => {
+  it('creates a number field', () => {
+    const field = number('Order');
+    expect(field.meta.ui).toBe('number');
     expect(field.schema.parse(42)).toBe(42);
-    expect(() => field.schema.parse("not a number")).toThrow();
+    expect(() => field.schema.parse('not a number')).toThrow();
   });
 
-  it("supports .max() and .min()", () => {
-    const field = number("Rating").min(1).max(5);
+  it('supports .max() and .min()', () => {
+    const field = number('Rating').min(1).max(5);
     expect(field.schema.parse(3)).toBe(3);
     expect(() => field.schema.parse(0)).toThrow();
     expect(() => field.schema.parse(6)).toThrow();
   });
 
-  it("supports .int()", () => {
-    const field = number("Count").int();
+  it('supports .int()', () => {
+    const field = number('Count').int();
     expect(field.schema.parse(3)).toBe(3);
     expect(() => field.schema.parse(3.5)).toThrow();
   });
 
-  it("supports .optional()", () => {
-    const field = number("Order").optional();
+  it('supports .optional()', () => {
+    const field = number('Order').optional();
     expect(field.meta.required).toBe(false);
     expect(field.schema.parse(undefined)).toBeUndefined();
   });
 });
 
-describe("boolean()", () => {
-  it("creates a boolean field", () => {
-    const field = boolean("Featured");
-    expect(field.meta.ui).toBe("boolean");
+describe('boolean()', () => {
+  it('creates a boolean field', () => {
+    const field = boolean('Featured');
+    expect(field.meta.ui).toBe('boolean');
     expect(field.schema.parse(true)).toBe(true);
-    expect(() => field.schema.parse("yes")).toThrow();
+    expect(() => field.schema.parse('yes')).toThrow();
   });
 });
 
-describe("select()", () => {
-  it("creates an enum field with select UI hint", () => {
-    const field = select("Status", ["draft", "published", "archived"]);
-    expect(field.meta.ui).toBe("select");
-    expect(field.schema.parse("draft")).toBe("draft");
-    expect(() => field.schema.parse("invalid")).toThrow();
+describe('select()', () => {
+  it('creates an enum field with select UI hint', () => {
+    const field = select('Status', ['draft', 'published', 'archived']);
+    expect(field.meta.ui).toBe('select');
+    expect(field.schema.parse('draft')).toBe('draft');
+    expect(() => field.schema.parse('invalid')).toThrow();
   });
 });
 
-describe("array()", () => {
-  it("creates an array field from another field", () => {
-    const tags = array("Tags", text("Tag"));
-    expect(tags.meta.ui).toBe("array");
-    expect(tags.schema.parse(["a", "b"])).toEqual(["a", "b"]);
+describe('array()', () => {
+  it('creates an array field from another field', () => {
+    const tags = array('Tags', text('Tag'));
+    expect(tags.meta.ui).toBe('array');
+    expect(tags.schema.parse(['a', 'b'])).toEqual(['a', 'b']);
     expect(() => tags.schema.parse([1, 2])).toThrow();
   });
 });
 
-describe("object()", () => {
-  it("creates a nested object field", () => {
-    const address = object("Address", {
-      street: text("Street"),
-      city: text("City"),
+describe('object()', () => {
+  it('creates a nested object field', () => {
+    const address = object('Address', {
+      street: text('Street'),
+      city: text('City'),
     });
-    expect(address.meta.ui).toBe("object");
+    expect(address.meta.ui).toBe('object');
     expect(
-      address.schema.parse({ street: "123 Main", city: "London" }),
-    ).toEqual({ street: "123 Main", city: "London" });
+      address.schema.parse({ street: '123 Main', city: 'London' }),
+    ).toEqual({ street: '123 Main', city: 'London' });
     expect(() => address.schema.parse({ street: 123 })).toThrow();
   });
 });

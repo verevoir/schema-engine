@@ -1,13 +1,13 @@
-import { z } from "zod";
-import type { FieldDefinition, FieldMeta, UIHint } from "./types.js";
+import { z } from 'zod';
+import type { FieldDefinition, FieldMeta } from './types.js';
 
 /**
  * Wraps a Zod schema with UI metadata. Provides chainable methods
  * that delegate to Zod while preserving the metadata.
  */
-export class Field<T extends z.ZodTypeAny = z.ZodTypeAny>
-  implements FieldDefinition<T>
-{
+export class Field<
+  T extends z.ZodTypeAny = z.ZodTypeAny,
+> implements FieldDefinition<T> {
   constructor(
     public readonly schema: T,
     public readonly meta: FieldMeta,

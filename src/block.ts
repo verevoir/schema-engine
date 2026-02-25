@@ -1,8 +1,5 @@
-import { z } from "zod";
-import type {
-  FieldRecord,
-  BlockDefinition,
-} from "./types.js";
+import { z } from 'zod';
+import type { FieldRecord, BlockDefinition } from './types.js';
 
 /** Define a named content block from a set of fields */
 export function defineBlock<F extends FieldRecord>(config: {
@@ -11,7 +8,7 @@ export function defineBlock<F extends FieldRecord>(config: {
 }): BlockDefinition<F> {
   const shape = Object.fromEntries(
     Object.entries(config.fields).map(([key, field]) => [key, field.schema]),
-  ) as { [K in keyof F]: F[K]["schema"] };
+  ) as { [K in keyof F]: F[K]['schema'] };
 
   const schema = z.object(shape);
 

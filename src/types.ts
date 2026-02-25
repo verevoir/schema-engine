@@ -1,14 +1,14 @@
-import type { z } from "zod";
+import type { z } from 'zod';
 
 /** UI hint telling an editor what control to render */
 export type UIHint =
-  | "text"
-  | "rich-text"
-  | "number"
-  | "boolean"
-  | "select"
-  | "array"
-  | "object";
+  | 'text'
+  | 'rich-text'
+  | 'number'
+  | 'boolean'
+  | 'select'
+  | 'array'
+  | 'object';
 
 /** Metadata attached to a field */
 export interface FieldMeta {
@@ -31,14 +31,15 @@ export interface BlockDefinition<F extends FieldRecord> {
   name: string;
   fields: F;
   schema: z.ZodObject<{
-    [K in keyof F]: F[K]["schema"];
+    [K in keyof F]: F[K]['schema'];
   }>;
-  validate: (data: unknown) => z.infer<
-    z.ZodObject<{ [K in keyof F]: F[K]["schema"] }>
-  >;
+  validate: (
+    data: unknown,
+  ) => z.infer<z.ZodObject<{ [K in keyof F]: F[K]['schema'] }>>;
 }
 
 /** Infer the TypeScript type from a block definition */
-export type InferBlock<B> = B extends BlockDefinition<infer F>
-  ? z.infer<z.ZodObject<{ [K in keyof F]: F[K]["schema"] }>>
-  : never;
+export type InferBlock<B> =
+  B extends BlockDefinition<infer F>
+    ? z.infer<z.ZodObject<{ [K in keyof F]: F[K]['schema'] }>>
+    : never;
