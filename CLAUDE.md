@@ -47,8 +47,8 @@ make run     # No-op (library, not a service)
 
 ## Architecture
 
-- `src/metadata.ts` — Field wrapper class that pairs a Zod schema with UI metadata
-- `src/fields.ts` — Field factory functions (text, richText, number, boolean, select, array, object)
+- `src/metadata.ts` — Field class hierarchy (Field, StringField, NumberField, ReferenceField) pairing Zod schemas with UI metadata
+- `src/fields.ts` — Field factory functions (text, richText, number, boolean, select, reference, array, object)
 - `src/block.ts` — `defineBlock()` groups fields into a named content block
 - `src/types.ts` — TypeScript type definitions (InferBlock, FieldMeta, etc.)
 - `src/index.ts` — Public API exports

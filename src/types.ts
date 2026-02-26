@@ -8,13 +8,18 @@ export type UIHint =
   | 'boolean'
   | 'select'
   | 'array'
-  | 'object';
+  | 'object'
+  | 'reference';
 
 /** Metadata attached to a field */
 export interface FieldMeta {
   label: string;
   ui: UIHint;
   required: boolean;
+  /** For reference fields: the block type this reference points to */
+  targetBlockType?: string;
+  /** For array fields: the metadata of the item field (e.g. array of references) */
+  itemMeta?: FieldMeta;
 }
 
 /** A field definition: Zod schema + metadata */

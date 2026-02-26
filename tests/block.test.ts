@@ -6,6 +6,8 @@ import {
   number,
   boolean,
   select,
+  reference,
+  array,
 } from '../src/index.js';
 
 describe('defineBlock()', () => {
@@ -88,5 +90,46 @@ describe('defineBlock()', () => {
         status: 'invalid',
       }),
     ).toThrow();
+  });
+});
+
+describe('block with reference fields', () => {
+  const article = defineBlock({
+    name: 'article',
+    fields: {
+      title: text('Title'),
+      author: reference('Author', 'author'),
+      reviewers: array('Reviewers', reference('Reviewer', 'author')),
+    },
+  });
+
+  it('validates with valid reference UUIDs', () => {
+    const data = {
+      title: 'Hello',
+      author: '550e8400-e29b-41d4-a716-446655440000',
+      reviewers: ['660e8400-e29b-41d4-a716-446655440001'],
+    };
+    const result = article.validate(data);
+    expect(result.author).toBe('550e8400-e29b-41d4-a716-446655440000');
+    expect(result.reviewers).toEqual(['660e8400-e29b-41d4-a716-446655440001']);
+  });
+
+  it('rejects invalid reference values', () => {
+    expect(() =>
+      article.validate({
+        title: 'Hello',
+        author: 'not-a-uuid',
+        reviewers: [],
+      }),
+    ).toThrow();
+  });
+
+  it('exposes reference metadata', () => {
+    expect(article.fields.author.meta.ui).toBe('reference');
+    expect(article.fields.author.meta.targetBlockType).toBe('author');
+    expect(article.fields.reviewers.meta.itemMeta?.ui).toBe('reference');
+    expect(article.fields.reviewers.meta.itemMeta?.targetBlockType).toBe(
+      'author',
+    );
   });
 });

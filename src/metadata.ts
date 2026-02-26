@@ -48,6 +48,9 @@ export class StringField extends Field<z.ZodString> {
   }
 }
 
+/** Field subclass for reference fields (stores a UUID string pointing to another document) */
+export class ReferenceField extends Field<z.ZodString> {}
+
 /** Field subclass for number-based fields with number-specific chainable methods */
 export class NumberField extends Field<z.ZodNumber> {
   /** Set maximum value */

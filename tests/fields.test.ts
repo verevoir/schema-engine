@@ -7,6 +7,8 @@ import {
   select,
   array,
   object,
+  reference,
+  ReferenceField,
 } from '../src/index.js';
 
 describe('text()', () => {
@@ -97,12 +99,56 @@ describe('select()', () => {
   });
 });
 
+describe('reference()', () => {
+  it('creates a reference field with reference UI hint', () => {
+    const field = reference('Author', 'author');
+    expect(field.meta.label).toBe('Author');
+    expect(field.meta.ui).toBe('reference');
+    expect(field.meta.required).toBe(true);
+    expect(field.meta.targetBlockType).toBe('author');
+  });
+
+  it('is an instance of ReferenceField', () => {
+    const field = reference('Author', 'author');
+    expect(field).toBeInstanceOf(ReferenceField);
+  });
+
+  it('validates UUID strings', () => {
+    const field = reference('Author', 'author');
+    const uuid = '550e8400-e29b-41d4-a716-446655440000';
+    expect(field.schema.parse(uuid)).toBe(uuid);
+    expect(() => field.schema.parse('not-a-uuid')).toThrow();
+    expect(() => field.schema.parse(123)).toThrow();
+  });
+
+  it('supports .optional()', () => {
+    const field = reference('Author', 'author').optional();
+    expect(field.meta.required).toBe(false);
+    expect(field.schema.parse(undefined)).toBeUndefined();
+  });
+});
+
 describe('array()', () => {
   it('creates an array field from another field', () => {
     const tags = array('Tags', text('Tag'));
     expect(tags.meta.ui).toBe('array');
     expect(tags.schema.parse(['a', 'b'])).toEqual(['a', 'b']);
     expect(() => tags.schema.parse([1, 2])).toThrow();
+  });
+
+  it('preserves itemMeta from the item field', () => {
+    const tags = array('Tags', text('Tag'));
+    expect(tags.meta.itemMeta).toEqual({
+      label: 'Tag',
+      ui: 'text',
+      required: true,
+    });
+  });
+
+  it('preserves itemMeta for reference items', () => {
+    const reviewers = array('Reviewers', reference('Reviewer', 'author'));
+    expect(reviewers.meta.itemMeta?.ui).toBe('reference');
+    expect(reviewers.meta.itemMeta?.targetBlockType).toBe('author');
   });
 });
 

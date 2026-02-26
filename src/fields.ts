@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Field, StringField, NumberField } from './metadata.js';
+import { Field, StringField, NumberField, ReferenceField } from './metadata.js';
 import type { FieldDefinition } from './types.js';
 
 /** Single-line text field */
@@ -38,6 +38,19 @@ export function select<T extends [string, ...string[]]>(
   return new Field(z.enum(options), { label, ui: 'select', required: true });
 }
 
+/** Reference field (stores a UUID string pointing to a document of the given block type) */
+export function reference(
+  label: string,
+  targetBlockType: string,
+): ReferenceField {
+  return new ReferenceField(z.string().uuid(), {
+    label,
+    ui: 'reference',
+    required: true,
+    targetBlockType,
+  });
+}
+
 /** Array field (list of items). Pass a field definition as the item template. */
 export function array<T extends z.ZodTypeAny>(
   label: string,
@@ -47,6 +60,7 @@ export function array<T extends z.ZodTypeAny>(
     label,
     ui: 'array',
     required: true,
+    itemMeta: item.meta,
   });
 }
 
