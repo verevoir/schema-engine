@@ -1,4 +1,4 @@
-# @nextlake/schema
+# @verevoir/schema
 
 A lightweight TypeScript library for defining structured content shapes. Built on [Zod](https://zod.dev) with UI metadata extensions.
 
@@ -12,13 +12,13 @@ A lightweight TypeScript library for defining structured content shapes. Built o
 ## Install
 
 ```bash
-npm install @nextlake/schema
+npm install @verevoir/schema
 ```
 
 ## Quick Example
 
 ```typescript
-import { defineBlock, text, richText, number, boolean } from '@nextlake/schema';
+import { defineBlock, text, richText, number, boolean } from '@verevoir/schema';
 
 const hero = defineBlock({
   name: 'hero',

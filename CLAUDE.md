@@ -1,4 +1,4 @@
-# @nextlake/schema — Schema Engine
+# @verevoir/schema — Schema Engine
 
 A lightweight TypeScript library for defining structured content shapes. Built on Zod with UI metadata extensions.
 
@@ -12,7 +12,7 @@ A lightweight TypeScript library for defining structured content shapes. Built o
 ## Quick Example
 
 ```typescript
-import { defineBlock, text, richText, number, boolean } from '@nextlake/schema';
+import { defineBlock, text, richText, number, boolean } from '@verevoir/schema';
 
 const hero = defineBlock({
   name: 'hero',

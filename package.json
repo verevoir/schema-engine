@@ -1,6 +1,7 @@
 {
-  "name": "@nextlake/schema",
-  "version": "0.2.0",
+  "name": "@verevoir/schema",
+  "version": "0.3.0-alpha.1",
+  "license": "MIT",
   "description": "Schema-driven content modelling and validation built on Zod",
   "type": "module",
   "main": "./dist/index.cjs",

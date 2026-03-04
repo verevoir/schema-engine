@@ -1,4 +1,4 @@
-# Intent — @nextlake/schema
+# Intent — @verevoir/schema
 
 ## Purpose
 
