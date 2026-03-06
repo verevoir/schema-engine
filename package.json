@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:adsurg/next-lake-schema-engine.git"
+    "url": "git+ssh://git@github.com:verevoir/schema-engine.git"
   },
   "scripts": {
     "prepare": "npm run build",
