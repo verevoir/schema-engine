@@ -20,6 +20,8 @@ export interface FieldMeta {
   targetBlockType?: string;
   /** For array fields: the metadata of the item field (e.g. array of references) */
   itemMeta?: FieldMeta;
+  /** Natural-language directive for AI-assisted content generation (e.g. "Write in third person, 2-3 sentences") */
+  hint?: string;
 }
 
 /** A field definition: Zod schema + metadata */

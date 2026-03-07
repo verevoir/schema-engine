@@ -53,6 +53,31 @@ describe('richText()', () => {
   });
 });
 
+describe('.hint()', () => {
+  it('attaches a hint to a text field', () => {
+    const field = text('Title').hint('Write a concise headline');
+    expect(field.meta.hint).toBe('Write a concise headline');
+    expect(field.meta.label).toBe('Title');
+    expect(field.meta.ui).toBe('text');
+  });
+
+  it('attaches a hint to a richText field', () => {
+    const field = richText('Bio').hint('Third person, 2-3 sentences');
+    expect(field.meta.hint).toBe('Third person, 2-3 sentences');
+    expect(field.meta.ui).toBe('rich-text');
+  });
+
+  it('preserves hint through chaining', () => {
+    const field = text('Title').hint('Short and punchy').max(60);
+    expect(field.meta.hint).toBe('Short and punchy');
+  });
+
+  it('is undefined when not set', () => {
+    const field = text('Title');
+    expect(field.meta.hint).toBeUndefined();
+  });
+});
+
 describe('number()', () => {
   it('creates a number field', () => {
     const field = number('Order');

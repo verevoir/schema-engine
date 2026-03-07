@@ -46,6 +46,11 @@ export class StringField extends Field<z.ZodString> {
   regex(pattern: RegExp): StringField {
     return new StringField(this.schema.regex(pattern), this.meta);
   }
+
+  /** Attach a natural-language directive for AI-assisted content generation */
+  hint(directive: string): StringField {
+    return new StringField(this.schema, { ...this.meta, hint: directive });
+  }
 }
 
 /** Field subclass for reference fields (stores a UUID string pointing to another document) */
