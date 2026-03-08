@@ -1,0 +1,77 @@
+# @verevoir/schema
+
+> Define content shapes in TypeScript. Generates Zod validators and types. No UI dependency.
+
+## Install
+
+```bash
+npm install @verevoir/schema
+```
+
+Runtime dependency: `zod`.
+
+## Core Concept
+
+A **block** is a named content type (article, author, settings page). A block is composed of **fields** that describe individual pieces of data. Define once — validate, type-check, and render editors from the same definition.
+
+## Exports
+
+### defineBlock({ name, fields })
+
+Creates a block definition. Returns an object with `.validate(data)` (throws on invalid), `.schema` (Zod schema), and field metadata for editors.
+
+```typescript
+import { defineBlock, text, richText, boolean, select } from '@verevoir/schema';
+
+const article = defineBlock({
+  name: 'article',
+  fields: {
+    title: text('Title').max(120),
+    body: richText('Body'),
+    published: boolean('Published').default(false),
+    status: select('Status', ['draft', 'published', 'archived']),
+  },
+});
+
+article.validate(data); // throws ZodError on invalid
+```
+
+### Field Factories
+
+- `text(label)` — Single-line string. Modifiers: `.max(n)`, `.min(n)`, `.regex(pattern)`, `.optional()`, `.default(value)`, `.hint(directive)`
+- `richText(label)` — Multi-line string (HTML). Same modifiers as text.
+- `number(label)` — Numeric. Modifiers: `.max(n)`, `.min(n)`, `.int()`, `.optional()`, `.default(value)`, `.hint(directive)`
+- `boolean(label)` — Boolean. Modifiers: `.optional()`, `.default(value)`, `.hint(directive)`
+- `select(label, options)` — Enum string. `options` is `string[]`. Modifiers: `.optional()`, `.default(value)`, `.hint(directive)`
+- `array(label, itemField)` — Array of a field type. Preserves `itemMeta`. Modifiers: `.max(n)`, `.min(n)`, `.optional()`, `.hint(directive)`
+- `object(label, fields)` — Nested object. `fields` is a `FieldRecord`. Modifiers: `.optional()`, `.hint(directive)`
+- `reference(label, targetBlockType)` — UUID string referencing another block type. Validated by `z.string().uuid()`.
+
+### .hint(directive)
+
+Stores a natural-language directive in `field.meta.hint` for AI-assisted editing.
+
+```typescript
+body: richText('Body').hint('Write for developers. Keep it concise.'),
+```
+
+### Type Inference
+
+```typescript
+import type { InferBlock } from '@verevoir/schema';
+
+type Article = InferBlock<typeof article>;
+// { title: string; body: string; published: boolean; status: 'draft' | 'published' | 'archived' }
+```
+
+### Metadata Types
+
+- `FieldDefinition` — Field metadata (label, type, validators, meta)
+- `FieldRecord` — `Record<string, FieldDefinition>`
+- `BlockDefinition` — Block with name, fields, schema, validate
+- `FieldMeta` — `{ hint?: string }` plus field-specific metadata
+- `UIHint` — `'text' | 'richtext' | 'number' | 'boolean' | 'select' | 'array' | 'object' | 'reference'`
+
+## Common Patterns
+
+Blocks are typically defined in a shared file and imported by both editor and server code. Validation happens before storage writes. `InferBlock` is used for type-safe data handling throughout the application.
