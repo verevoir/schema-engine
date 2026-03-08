@@ -3,6 +3,7 @@
   "version": "0.3.1-beta.1",
   "license": "MIT",
   "description": "Schema-driven content modelling and validation built on Zod",
+  "homepage": "https://verevoir.io",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
