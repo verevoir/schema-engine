@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Let developers define structured content shapes in TypeScript and get validation, type inference, and UI hints from a single definition. The schema engine is the foundation package — everything else in NextLake builds on it.
+Let developers define structured content shapes in TypeScript and get validation, type inference, and UI hints from a single definition. The schema engine is the foundation package — everything else in Verevoir builds on it.
 
 ## Goals
 
@@ -29,4 +29,4 @@ Let developers define structured content shapes in TypeScript and get validation
 
 - Single runtime dependency: `zod`
 - No framework imports (React, Vue, etc.) — ever
-- Every field function must return a standard Zod schema that works outside NextLake
+- Every field function must return a standard Zod schema that works outside Verevoir
