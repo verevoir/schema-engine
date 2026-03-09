@@ -53,6 +53,12 @@ type Hero = InferBlock<typeof hero>;
 - **Every field function returns a standard Zod schema** — you can extract it and use it anywhere Zod works.
 - **The `.ui` hint tells an editor what control to render**, but the schema engine doesn't know about editors.
 
+## Documentation
+
+- [Defining Content Models](https://verevoir.io/docs/defining-content-models) — blocks, fields, validation, and type inference
+- [Getting Started](https://verevoir.io/docs/getting-started) — content model, storage, and editor in five minutes
+- [Integration Guide](https://verevoir.io/docs/integration) — connecting content models, storage, editor, and more
+
 ## Development
 
 ```bash
