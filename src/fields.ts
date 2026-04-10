@@ -51,6 +51,21 @@ export function reference(
   });
 }
 
+/**
+ * Link field — a single text input that accepts either a full URL
+ * or an internal slug. The editor renders a smarter component than
+ * plain text: it auto-detects internal vs external from the value
+ * (presence of an `http(s)://`, `mailto:`, etc. protocol marks it
+ * as external) and shows a picker button for searching internal
+ * pages. Stores as a plain string.
+ *
+ * No discriminator field, no two-question flow — the type is
+ * inferred from the value itself.
+ */
+export function link(label: string): StringField {
+  return new StringField(z.string(), { label, ui: 'link', required: true });
+}
+
 /** Array field (list of items). Pass a field definition as the item template. */
 export function array<T extends z.ZodTypeAny>(
   label: string,

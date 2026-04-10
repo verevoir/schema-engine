@@ -9,7 +9,8 @@ export type UIHint =
   | 'select'
   | 'array'
   | 'object'
-  | 'reference';
+  | 'reference'
+  | 'link';
 
 /** Metadata attached to a field */
 export interface FieldMeta {

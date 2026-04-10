@@ -8,6 +8,7 @@ export {
   array,
   object,
   reference,
+  link,
 } from './fields.js';
 
 // Block definition
