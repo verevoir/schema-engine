@@ -41,6 +41,25 @@ export class Field<
     const Ctor = this.constructor as new (schema: T, meta: FieldMeta) => this;
     return new Ctor(this.schema, { ...this.meta, hint: directive });
   }
+
+  /**
+   * Override the editor's default UI selection for this field. The
+   * meaning of `value` depends on the field type and the editor —
+   * an editor that doesn't recognise the value should fall back to
+   * its default behaviour.
+   *
+   * Common values for `array` fields:
+   * - `'chips'` — tag input for scalar arrays
+   * - `'table'` — inline editable table for small object arrays
+   * - `'cards'` — card grid for medium object arrays
+   * - `'reference'` — picker modal + chip view for reference arrays
+   * - `'polymorphic'` — list with type picker for discriminated unions
+   * - `'drilldown'` — drill-down with breadcrumb for deeply nested data
+   */
+  display(value: string): this {
+    const Ctor = this.constructor as new (schema: T, meta: FieldMeta) => this;
+    return new Ctor(this.schema, { ...this.meta, display: value });
+  }
 }
 
 /** Field subclass for string-based fields with string-specific chainable methods */

@@ -20,8 +20,24 @@ export interface FieldMeta {
   targetBlockType?: string;
   /** For array fields: the metadata of the item field (e.g. array of references) */
   itemMeta?: FieldMeta;
+  /**
+   * For object fields: the original FieldRecord that defined the
+   * object's shape. Preserved (along with each child field's metadata)
+   * so editors can introspect the structure — e.g. to render an
+   * editable table for an array of small objects without losing
+   * column labels, hints, or UI hints.
+   */
+  objectFields?: FieldRecord;
   /** Natural-language directive for AI-assisted content generation (e.g. "Write in third person, 2-3 sentences") */
   hint?: string;
+  /**
+   * Optional renderer hint for editors. Lets the schema author
+   * override automatic UI selection (e.g. force an array of small
+   * objects to render as a card grid instead of an inline table).
+   * Editors that don't recognise the value should fall back to
+   * their default behaviour.
+   */
+  display?: string;
 }
 
 /** A field definition: Zod schema + metadata */

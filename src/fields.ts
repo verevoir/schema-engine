@@ -77,5 +77,9 @@ export function object<T extends Record<string, FieldDefinition>>(
     label,
     ui: 'object',
     required: true,
+    // Preserve the original FieldRecord so editors can introspect
+    // the nested shape (labels, hints, UI hints) for richer rendering
+    // — e.g. picking column headers for a table view inside an array.
+    objectFields: fields,
   });
 }
