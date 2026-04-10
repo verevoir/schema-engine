@@ -31,6 +31,16 @@ export class Field<
       required: false,
     });
   }
+
+  /**
+   * Attach a natural-language directive describing the field. Used by
+   * editors to display contextual help, by AI features for content
+   * generation, and by docs generators.
+   */
+  hint(directive: string): this {
+    const Ctor = this.constructor as new (schema: T, meta: FieldMeta) => this;
+    return new Ctor(this.schema, { ...this.meta, hint: directive });
+  }
 }
 
 /** Field subclass for string-based fields with string-specific chainable methods */
@@ -48,11 +58,6 @@ export class StringField extends Field<z.ZodString> {
   /** Apply a regex pattern */
   regex(pattern: RegExp): StringField {
     return new StringField(this.schema.regex(pattern), this.meta);
-  }
-
-  /** Attach a natural-language directive for AI-assisted content generation */
-  hint(directive: string): StringField {
-    return new StringField(this.schema, { ...this.meta, hint: directive });
   }
 }
 

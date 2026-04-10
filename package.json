@@ -1,6 +1,6 @@
 {
   "name": "@verevoir/schema",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "description": "Schema-driven content modelling and validation built on Zod",
   "homepage": "https://verevoir.io",
