@@ -22,8 +22,11 @@ export class Field<
   }
 
   /** Set a default value */
-  default<D extends z.input<T>>(value: D): Field<z.ZodDefault<T>> {
-    return new Field(this.schema.default(value), {
+  default(value: z.output<T>): Field<z.ZodDefault<T>> {
+    // Cast required for zod 4: `.default()` expects `NoUndefined<output<T>>`
+    // but TypeScript cannot prove our `value: z.output<T>` excludes undefined
+    // when T is unconstrained.
+    return new Field(this.schema.default(value as never), {
       ...this.meta,
       required: false,
     });

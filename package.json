@@ -1,6 +1,6 @@
 {
   "name": "@verevoir/schema",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "Schema-driven content modelling and validation built on Zod",
   "homepage": "https://verevoir.io",
@@ -32,16 +32,16 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "zod": "^3.25.76"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "eslint": "^9.39.4",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1",
-    "vitest": "^3.2.4"
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^4.1.4"
   }
 }

@@ -31,10 +31,10 @@ export function boolean(label: string): Field<z.ZodBoolean> {
 }
 
 /** Select field (dropdown from a fixed set of options) */
-export function select<T extends [string, ...string[]]>(
+export function select<const T extends readonly [string, ...string[]]>(
   label: string,
   options: T,
-): Field<z.ZodEnum<T>> {
+) {
   return new Field(z.enum(options), { label, ui: 'select', required: true });
 }
 
