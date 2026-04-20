@@ -39,6 +39,20 @@ export interface FieldMeta {
    * their default behaviour.
    */
   display?: string;
+  /**
+   * Marks a field as conventional document metadata (title, slug,
+   * SEO fields, etc.). Set automatically by `defineContentBlock`
+   * for the universal meta fields it injects. The admin uses this
+   * flag to bucket fields into the Document tab's "metadata"
+   * column on the left vs the "fields" column on the right.
+   *
+   * Block authors generally don't set this directly — they rely on
+   * `defineContentBlock` to mark its built-in fields. Setting it
+   * manually on a custom field will lift it into the metadata
+   * column too, which is fine for the rare case where a block has
+   * its own SEO-style field.
+   */
+  isMeta?: boolean;
 }
 
 /** A field definition: Zod schema + metadata */

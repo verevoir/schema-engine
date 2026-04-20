@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
   defineBlock,
+  defineContentBlock,
+  meta,
   text,
   richText,
   number,
@@ -131,5 +133,64 @@ describe('block with reference fields', () => {
     expect(article.fields.reviewers.meta.itemMeta?.targetBlockType).toBe(
       'author',
     );
+  });
+});
+
+describe('defineContentBlock()', () => {
+  const page = defineContentBlock({
+    name: 'page',
+    fields: {
+      body: richText('Body'),
+    },
+  });
+
+  it('injects the universal meta fields alongside the author fields', () => {
+    expect(Object.keys(page.fields)).toEqual(
+      expect.arrayContaining([
+        'title',
+        'slug',
+        'metaTitle',
+        'metaDescription',
+        'addTitleSuffix',
+        'body',
+      ]),
+    );
+  });
+
+  it('marks the injected meta fields with isMeta: true', () => {
+    expect(page.fields.title.meta.isMeta).toBe(true);
+    expect(page.fields.slug.meta.isMeta).toBe(true);
+    expect(page.fields.metaTitle.meta.isMeta).toBe(true);
+    expect(page.fields.metaDescription.meta.isMeta).toBe(true);
+    expect(page.fields.addTitleSuffix.meta.isMeta).toBe(true);
+  });
+
+  it('does not mark author fields as meta', () => {
+    expect(page.fields.body.meta.isMeta).toBeUndefined();
+  });
+
+  it('validates a payload with both meta and author fields', () => {
+    const result = page.validate({
+      title: 'Hello',
+      slug: '/hello',
+      metaTitle: 'Hello — Site',
+      metaDescription: 'A friendly hello',
+      addTitleSuffix: true,
+      body: 'World',
+    });
+    expect(result.title).toBe('Hello');
+    expect(result.body).toBe('World');
+  });
+
+  it('lets meta() opt a custom field into the metadata column', () => {
+    const block = defineBlock({
+      name: 'thing',
+      fields: {
+        canonicalUrl: meta(text('Canonical URL').optional()),
+        body: richText('Body'),
+      },
+    });
+    expect(block.fields.canonicalUrl.meta.isMeta).toBe(true);
+    expect(block.fields.body.meta.isMeta).toBeUndefined();
   });
 });

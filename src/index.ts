@@ -12,7 +12,8 @@ export {
 } from './fields.js';
 
 // Block definition
-export { defineBlock } from './block.js';
+export { defineBlock, defineContentBlock, meta } from './block.js';
+export type { ContentMetaFields } from './block.js';
 
 // Metadata classes (for advanced use / extending)
 export { Field, StringField, NumberField, ReferenceField } from './metadata.js';
