@@ -36,18 +36,18 @@ No editor dependency; no storage dependency. The schema engine is consumed by th
 
 ## Field factories
 
-| Factory                                  | Stored as       | Editor control                                    |
-| ---------------------------------------- | --------------- | ------------------------------------------------- |
-| `text(label)`                            | string          | single-line input                                 |
-| `richText(label)`                        | string          | rich-text / markdown surface                      |
-| `datetime(label)`                        | ISO-8601 string | natural-language datetime input (via the editor)  |
-| `number(label)`                          | number          | number input                                      |
-| `boolean(label)`                         | boolean         | toggle                                            |
-| `select(label, [...options])`            | string (enum)   | dropdown                                          |
-| `reference(label, targetBlockType)`      | UUID string     | reference picker                                  |
-| `link(label)`                            | string          | link field (internal-or-external, auto-detected)  |
-| `array(label, item)`                     | array           | list — chips / table / cards / drilldown         |
-| `object(label, fields)`                  | nested object   | nested fieldset                                   |
+| Factory                             | Stored as       | Editor control                                   |
+| ----------------------------------- | --------------- | ------------------------------------------------ |
+| `text(label)`                       | string          | single-line input                                |
+| `richText(label)`                   | string          | rich-text / markdown surface                     |
+| `datetime(label)`                   | ISO-8601 string | natural-language datetime input (via the editor) |
+| `number(label)`                     | number          | number input                                     |
+| `boolean(label)`                    | boolean         | toggle                                           |
+| `select(label, [...options])`       | string (enum)   | dropdown                                         |
+| `reference(label, targetBlockType)` | UUID string     | reference picker                                 |
+| `link(label)`                       | string          | link field (internal-or-external, auto-detected) |
+| `array(label, item)`                | array           | list — chips / table / cards / drilldown         |
+| `object(label, fields)`             | nested object   | nested fieldset                                  |
 
 Every factory returns a `Field<T>` that wraps a Zod schema and carries metadata. Chain `.optional()`, `.default(value)`, `.hint('...')`, `.display('cards')` to customise. Call `field.schema` to get the raw Zod schema for use anywhere Zod works.
 
@@ -74,7 +74,9 @@ The injected fields carry an `isMeta: true` marker. Admin UIs can use the marker
 Every field supports a free-text directive:
 
 ```typescript
-slug: text('Slug').hint('URL path. Use `/` for the home page, lowercase hyphenated otherwise.');
+slug: text('Slug').hint(
+  'URL path. Use `/` for the home page, lowercase hyphenated otherwise.',
+);
 ```
 
 Editors surface hints as help text. AI-assisted content tools use them as copy-generation directives. Doc generators include them in rendered field descriptions. One sentence, three audiences.
